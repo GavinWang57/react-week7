@@ -98,9 +98,13 @@ function AdminProductTable() {
         setProducts(response.data.products);
         setPagination(response.data.pagination);
       }
-    } catch (error) {    
+    } catch (error) {
       console.error("取得產品資料失敗:", error);
       dispatch(createAsyncMessage(error.response.data));
+
+      if (error.response?.status === 401) {
+        navigate("/login");
+      }
     }
   };
 

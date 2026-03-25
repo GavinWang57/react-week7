@@ -1,9 +1,33 @@
 import { Outlet, Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 function AdminLayout() {
+  const dispatch = useDispatch();
+  const API_BASE = import.meta.env.VITE_API_BASE;
   const navigate = useNavigate();
+  const logoutUrl = API_BASE + "/logout";
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(logoutUrl);
+      document.cookie =
+        "hexToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      delete axios.defaults.headers.common["Authorization"];
+      alert("已登出，將導向首頁");
+      // dispatch(createAsyncMessage({ success: true, message: "已登出，將導向首頁" }));
+      navigate("/");
+    } catch (error) {
+      console.error("登出失敗:", error);
+      // 即使 API 失敗，仍然清除本地資料
+      document.cookie =
+        "hexToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      delete axios.defaults.headers.common["Authorization"];
+      navigate("/");
+    }
+  };
+
   return (
     <>
       <header className="">
