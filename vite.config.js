@@ -5,7 +5,5 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   // 設定 GitHub Pages 部署的 base 路徑
-  base:
-    process.env.NODE_ENV === "production" ? "/react-week6/" : "/",
+  base: process.env.NODE_ENV === "production" ? "/react-week7/" : "/",
 });
- 
